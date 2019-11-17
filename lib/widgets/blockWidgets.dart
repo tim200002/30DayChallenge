@@ -1,10 +1,13 @@
 import 'package:day_challenge/assets/style.dart';
 import 'package:day_challenge/blocProvider/detailProvider.dart';
+import 'package:day_challenge/blocs/blocDetailScreen.dart';
 import 'package:day_challenge/helper/activity.dart';
 import 'package:day_challenge/helper/hexColor.dart';
+import 'package:day_challenge/screens/detailScreen2.dart';
 
 import 'package:day_challenge/widgets/horizontalProgressBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 /*
   Widget for one Bloc of an Activity on the Main Screen
@@ -103,7 +106,9 @@ class _BlockTileState extends State<BlockTile> {
         onTap: () => {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
-                return DetailScreenProvider(activity: widget.activity);
+                return BlocProvider<BLocDetailScreen>(
+                    builder: (BuildContext context) => BLocDetailScreen(),
+                    child: DetailScreen(activity: widget.activity));
               }))
             });
   }

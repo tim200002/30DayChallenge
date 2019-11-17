@@ -13,9 +13,15 @@ class GoToDetailScreen extends MainEvents {}
 //Event to go to the Login Screen
 class GoToLoginScreen extends MainEvents {}
 
+//Event to check if Login
+class CheckForLogin extends MainEvents {}
+
 //Login Events
 class LoginEvent extends MainEvents {
   String name;
   String password;
   LoginEvent({@required this.name, @required this.password});
 }
+
+//Logout
+class LogoutEvent extends MainEvents {}
