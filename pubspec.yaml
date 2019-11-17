@@ -19,8 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc: ^0.14.0
-  flutter_bloc: ^0.14.0
+
+  flutter_bloc: ^2.0.0
   http: ^0.12.0+2
   shared_preferences: ^0.5.4
 
