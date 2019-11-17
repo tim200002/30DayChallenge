@@ -12,14 +12,14 @@ import 'package:http/http.dart' as http;
 class BLocDetailScreen extends Bloc<DetailEvents, DetailStates> {
 //Function to call to change update Activity -> this means Setting the
 //Date to Date.now()
-  void setActivityDone(Activity activity) {
+  /*void setActivityDone(Activity activity) {
     dispatch(MakeDoneEvent(activity: activity));
   }
 
   void showActivity(Activity activity) {
     dispatch(ShowActivityEvent(activity: activity));
   }
-
+*/
   //BeginningState uninitialized Screen
   //MAybe we can directly Start with the rigth Screen doesn't get anythin from API
   @override
@@ -29,6 +29,8 @@ class BLocDetailScreen extends Bloc<DetailEvents, DetailStates> {
   @override
   Stream<DetailStates> mapEventToState(DetailEvents event) async* {
     if (event is ShowActivityEvent) {
+      log("Show Activity Events");
+      log(event.activity.description);
       //Just go to State where Activity is shown
       yield ShowActivity(activity: event.activity);
     }

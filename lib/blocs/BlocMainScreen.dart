@@ -19,9 +19,10 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
   //These functions can be called from outside
 
   //Update Screen
-  void update() {
+  /* void update() {
     dispatch(FetchAll());
   }
+  
 
   //Go to detail Screen by parsing the information about
   //the presses Bloc to this Screen
@@ -29,12 +30,14 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
     dispatch(GoToDetailScreen());
   }
 
-  void deleteActivity() {}
+  void deleteActivity() {}*/
 
   //Beginning State,
   //Activity Uninitialized shows loading Screen
   //Try to connect and get Information if logged In, show Informatio
   //Else show logging inn Screen
+
+  String jwtToken;
   @override
   MainScreenState get initialState => MainUninitialized();
 
@@ -45,33 +48,86 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
       //Fetches all Activities from Repository and changes State to loaded
       if (event is FetchAll) {
         //Make API Call
-        List<Activity> activities = await fetchDailyActivities();
+        List<Activity> activities = await fetchDailyActivities(jwtToken);
 
         List<Activity> actualActivities = getActualActivities(activities);
         double progress = getProgress(activities);
         String progressString = getProgressString(activities);
         //Then starting Loaded State with all activities
 
-        yield ShowLoginScreeen();
-        /* yield MainLoaded(
+        //yield ShowLoginScreeen();
+        yield MainLoaded(
             activities: activities,
             progress: progress,
             progressText: progressString,
-            actualActivities: actualActivities);*/
+            actualActivities: actualActivities);
       }
 
       //Transition to detail Screen
       else if (event is GoToDetailScreen) {
         //Transition to detail Screen
-      } else if (event is LoginEvent) {
-        verifyUser(event.name, event.password);
+      }
+      //Check if Key exists -> Go to Home Screen or Login Screen
+      else if (event is CheckForLogin) {
+        String token = await checkForToken();
+        if (token != null) {
+          jwtToken = token;
+
+          //Later my be changet to show a nice loading screen
+          List<Activity> activities = await fetchDailyActivities(jwtToken);
+
+          List<Activity> actualActivities = getActualActivities(activities);
+          double progress = getProgress(activities);
+          String progressString = getProgressString(activities);
+          //Then starting Loaded State with all activities
+
+          //yield ShowLoginScreeen();
+          yield MainLoaded(
+              activities: activities,
+              progress: progress,
+              progressText: progressString,
+              actualActivities: actualActivities);
+        } else {
+          yield (ShowLoginScreen());
+        }
+      }
+      //Event trynign to login after usere entere credentials on login Field
+      else if (event is LoginEvent) {
+        log("Login Event");
+        String token = await verifyUser(event.name, event.password);
+        if (token != null) {
+          jwtToken = token;
+          List<Activity> activities = await fetchDailyActivities(jwtToken);
+
+          List<Activity> actualActivities = getActualActivities(activities);
+          double progress = getProgress(activities);
+          String progressString = getProgressString(activities);
+          //Then starting Loaded State with all activities
+
+          //yield ShowLoginScreeen();
+          yield MainLoaded(
+              activities: activities,
+              progress: progress,
+              progressText: progressString,
+              actualActivities: actualActivities);
+        } else {
+          log("Error in validation");
+          yield (ShowLoginScreen());
+        }
+      } else if (event is LogoutEvent) {
+        await logout();
+        yield (ShowLoginScreen());
+      }
+      //Event to go to Login Screen
+      else if (event is GoToLoginScreen) {
+        yield ShowLoginScreen();
       }
     } catch (_) {}
   }
 }
 
 //This Function is there to check if User exists and if so writes jwt Token in shared preferences
-Future<bool> verifyUser(String name, String password) async {
+Future<String> verifyUser(String name, String password) async {
   Map data = {'name': name, 'password': password};
   var body = json.encode(data);
   //Make auth call
@@ -80,9 +136,11 @@ Future<bool> verifyUser(String name, String password) async {
 
   if (response.statusCode != 200) {
     log("Error doing authorization");
-    return false;
+    return null;
   }
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('30Day_jwtPrivateKey', response.body);
+  return response.body;
 }
 
 //This function is there to return all Activities that should also be done today
@@ -118,4 +176,30 @@ String getProgressString(List<Activity> activities) {
   log("Get Progress String");
   int fullfilled = activities.length - getActualActivities(activities).length;
   return "${fullfilled.toString()}/${activities.length.toString()}";
+}
+
+//Is there to check if logged in
+Future<String> checkForToken() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //prefs.clear();
+  //log("Check for token");
+  //Check if token exists
+  if (prefs.containsKey('30Day_jwtPrivateKey')) {
+    //exist return token
+    log("If");
+    String token = prefs.getString('30Day_jwtPrivateKey');
+    return token;
+  }
+
+  //doesnt exist -> return false,
+  else {
+    log("else");
+    return null;
+  }
+}
+
+logout() async {
+  log("Logout");
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.clear();
 }

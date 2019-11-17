@@ -53,9 +53,9 @@ class MainLoaded extends MainScreenState {
   String toString() => 'Post Loaded{activities: ${activities.length}';
 }
 
-class ShowLoginScreeen extends MainScreenState {
+class ShowLoginScreen extends MainScreenState {
   @override
-  String toString() => 'LoginScreen';
+  String toString() => 'ShowLoginScreen';
 }
 
 //State for navigating to Detail Screen

@@ -6,7 +6,7 @@ import 'package:day_challenge/events/MainScreenEvents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen2 extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nameController = TextEditingController();
@@ -34,6 +34,7 @@ class LoginScreen2 extends StatelessWidget {
     final passwordField = TextField(
         controller: passwordController,
         obscureText: true,
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
@@ -56,13 +57,13 @@ class LoginScreen2 extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
-          log("Hello");
-          BlocProvider.of<BlocHomeScreen>(context).dispatch(LoginEvent(
+          BlocProvider.of<BlocHomeScreen>(context).add(LoginEvent(
               name: nameController.text, password: passwordController.text));
         },
         child: Text(
           "Login",
           textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -83,15 +84,24 @@ class LoginScreen2 extends StatelessWidget {
             SizedBox(
               height: 45.0,
             ),
-            nameField,
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: nameField,
+            ),
             SizedBox(
               height: 25.0,
             ),
-            passwordField,
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: passwordField,
+            ),
             SizedBox(
               height: 35.0,
             ),
-            loginButton
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: loginButton,
+            )
             //
           ],
         ),

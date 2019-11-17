@@ -1,46 +1,38 @@
-import 'dart:developer';
-
 import 'package:day_challenge/assets/colors.dart';
+import 'package:day_challenge/assets/style.dart';
 import 'package:day_challenge/blocs/blocDetailScreen.dart';
 import 'package:day_challenge/events/detailScreenEvents.dart';
-import 'package:day_challenge/assets/style.dart';
-import 'package:day_challenge/states/detailScreenStates.dart';
 import 'package:day_challenge/helper/activity.dart';
+import 'package:day_challenge/states/detailScreenStates.dart';
 import 'package:day_challenge/widgets/makeDoneScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DetailScreen extends StatefulWidget {
-  DetailScreen({@required this.activity, key}) : super(key: key);
+class DetailScreen extends StatelessWidget {
+  DetailScreen({@required this.activity, Key key}) : super(key: key);
 
-  //Reference or Copy of pressed Activity
-  Activity activity;
-
-  @override
-  _DetailScreenState createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
+  final Activity activity;
   final double topBarHeight = 30;
   final double checkImageSize = 70;
   final detailBloc = new BLocDetailScreen();
 
   //final detailBloc=new BlocDetailScreen()
-
+/*
   @override
   void dispose() {
     detailBloc.dispose();
     super.dispose();
   }
+  */
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder(
-        bloc: detailBloc,
-        builder: (BuildContext context, DetailStates state) {
+      body: BlocBuilder<BLocDetailScreen, DetailStates>(
+        builder: (context, state) {
           if (state is ScreenUnitialized) {
-            detailBloc.dispatch(ShowActivityEvent(activity: widget.activity));
+            BlocProvider.of<BLocDetailScreen>(context)
+                .add(ShowActivityEvent(activity: activity));
             return SafeArea(
               child: Text("Error uninitialized"),
             );
@@ -109,8 +101,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               width: checkImageSize,
                               height: checkImageSize,
                             ),
-                            onTap: () => detailBloc.dispatch(
-                                MakeDoneEvent(activity: widget.activity)),
+                            onTap: () =>
+                                BlocProvider.of<BLocDetailScreen>(context)
+                                    .add(MakeDoneEvent(activity: activity)),
                           ),
                         )),
                   )

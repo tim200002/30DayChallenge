@@ -47,13 +47,10 @@ class Activity {
 }
 
 //Function to Fetch all Daily Activities
-Future<List<Activity>> fetchDailyActivities() async {
+Future<List<Activity>> fetchDailyActivities(token) async {
   log("Fetching");
-  var response =
-      await http.get('http://192.168.0.198:3000/api/daily', headers: {
-    "x-auth-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGNmZDM2N2ZlZjExNTExYTg1ZjM1MzMiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE1NzM5MDE2ODd9.ILpOWKaWmch2QrIxyioiIZQKAaO4-UJtpj_3V1bfd-c"
-  });
+  var response = await http.get('http://192.168.0.198:3000/api/daily',
+      headers: {"x-auth-token": token});
 
   List<dynamic> list = json.decode(response.body);
 

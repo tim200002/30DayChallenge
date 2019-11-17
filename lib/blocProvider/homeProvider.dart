@@ -1,12 +1,8 @@
-import 'package:day_challenge/blocs/BlocMainScreen.dart';
-import 'package:day_challenge/screens/homeScreen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 /*
   This is the main Screen Provider, it is the Class to Call if you want to diplay the Main Screen
   Only Task is to show the Real Main Screen widget and provide the Bloc to it
 */
+/*
 class HomeScreenProvider extends StatefulWidget {
   HomeScreenProvider({Key key}) : super(key: key);
 
@@ -21,3 +17,4 @@ class _HomeScreenProviderState extends State<HomeScreenProvider> {
     return BlocProvider(bloc: myBloc, child: HomeScreen());
   }
 }
+*/
