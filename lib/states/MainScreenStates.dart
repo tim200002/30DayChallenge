@@ -58,6 +58,8 @@ class ShowLoginScreen extends MainScreenState {
   String toString() => 'ShowLoginScreen';
 }
 
+class LoginOrRegister extends MainScreenState {}
+
 //State for navigating to Detail Screen
 //Does this really need a state
 class NavigateToDetailScreen extends MainScreenState {

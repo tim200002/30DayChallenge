@@ -15,3 +15,6 @@ final secondBigStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
 );
+
+//Smaller Text for Challenge Tile
+final challengeSmall = TextStyle(color: Colors.white, fontSize: 20);

@@ -2,8 +2,11 @@ import 'dart:developer';
 
 import 'package:day_challenge/assets/art.dart';
 import 'package:day_challenge/assets/colors.dart';
+import 'package:day_challenge/blocs/blocChallengeScree.dart';
 import 'package:day_challenge/events/MainScreenEvents.dart';
+import 'package:day_challenge/screens/challengeScreen.dart';
 import 'package:day_challenge/screens/login2.dart';
+import 'package:day_challenge/screens/loginOrRegister.dart';
 import 'package:day_challenge/states/MainScreenStates.dart';
 import 'package:day_challenge/blocs/BlocMainScreen.dart';
 import 'package:day_challenge/widgets/blockWidgets.dart';
@@ -122,7 +125,19 @@ class HomeScreen extends StatelessWidget {
                             color: Colors.white,
                             size: firstContainerHeight,
                           ),
-                          onTap: () => log("Plus tapped"),
+                          onTap: () {
+                            log("Plus tapped");
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return BlocProvider<BlocChallengeScreen>(
+                                      builder: (BuildContext context) =>
+                                          BlocChallengeScreen(),
+                                      child: ChallengeScreen());
+                                },
+                              ),
+                            );
+                          },
                         ),
                         padding: const EdgeInsets.all(12.0),
                       )
@@ -163,6 +178,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ));
+          } else if (state is LoginOrRegister) {
+            return LoginOrRegisterScreen();
           }
         },
       ),

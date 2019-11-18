@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:day_challenge/assets/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,11 +50,11 @@ class Activity {
 //Function to Fetch all Daily Activities
 Future<List<Activity>> fetchDailyActivities(token) async {
   log("Fetching");
-  var response = await http.get('http://192.168.0.198:3000/api/daily',
-      headers: {"x-auth-token": token});
-
+  var response =
+      await http.get('$webAdress/api/daily', headers: {"x-auth-token": token});
+  log("fetched");
   List<dynamic> list = json.decode(response.body);
-
+  log("decoded");
   List<Activity> activities = new List();
 
   if (response.statusCode == 200) {

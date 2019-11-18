@@ -23,5 +23,12 @@ class LoginEvent extends MainEvents {
   LoginEvent({@required this.name, @required this.password});
 }
 
+//Register Event
+class RegisterEvent extends MainEvents {
+  String name;
+  String password;
+  RegisterEvent({@required this.name, @required this.password});
+}
+
 //Logout
 class LogoutEvent extends MainEvents {}

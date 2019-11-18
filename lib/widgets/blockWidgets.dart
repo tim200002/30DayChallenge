@@ -104,12 +104,15 @@ class _BlockTileState extends State<BlockTile> {
           ),
         ),
         onTap: () => {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return BlocProvider<BLocDetailScreen>(
-                    builder: (BuildContext context) => BLocDetailScreen(),
-                    child: DetailScreen(activity: widget.activity));
-              }))
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return BlocProvider<BLocDetailScreen>(
+                        builder: (BuildContext context) => BLocDetailScreen(),
+                        child: DetailScreen(activity: widget.activity));
+                  },
+                ),
+              ),
             });
   }
 }

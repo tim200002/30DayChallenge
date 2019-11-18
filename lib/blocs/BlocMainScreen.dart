@@ -6,6 +6,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:day_challenge/assets/api.dart';
 import 'dart:async';
 import 'package:day_challenge/events/MainScreenEvents.dart';
 import 'package:day_challenge/helper/activity.dart';
@@ -112,7 +113,7 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
               actualActivities: actualActivities);
         } else {
           log("Error in validation");
-          yield (ShowLoginScreen());
+          yield (LoginOrRegister());
         }
       } else if (event is LogoutEvent) {
         await logout();
@@ -121,6 +122,28 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
       //Event to go to Login Screen
       else if (event is GoToLoginScreen) {
         yield ShowLoginScreen();
+      } else if (event is RegisterEvent) {
+        bool res = await registerUser(event.name, event.password);
+        if (res) {
+          String token = await verifyUser(event.name, event.password);
+          jwtToken = token;
+          List<Activity> activities = await fetchDailyActivities(jwtToken);
+
+          List<Activity> actualActivities = getActualActivities(activities);
+          double progress = getProgress(activities);
+          String progressString = getProgressString(activities);
+          //Then starting Loaded State with all activities
+          log("Befor yield");
+          //yield ShowLoginScreeen();
+          yield MainLoaded(
+              activities: activities,
+              progress: progress,
+              progressText: progressString,
+              actualActivities: actualActivities);
+          //yield ShowLoginScreen();
+        } else
+          log("Login or Register");
+        yield (LoginOrRegister());
       }
     } catch (_) {}
   }
@@ -131,7 +154,7 @@ Future<String> verifyUser(String name, String password) async {
   Map data = {'name': name, 'password': password};
   var body = json.encode(data);
   //Make auth call
-  var response = await http.post('http://192.168.0.198:3000/api/auth',
+  var response = await http.post('${webAdress}/api/auth',
       headers: {"Content-Type": "application/json"}, body: body);
 
   if (response.statusCode != 200) {
@@ -202,4 +225,19 @@ logout() async {
   log("Logout");
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.clear();
+}
+
+Future<bool> registerUser(name, password) async {
+  Map data = {'name': name, 'password': password};
+  var body = json.encode(data);
+  //Make auth call
+  var response = await http.post('${webAdress}/api/register',
+      headers: {"Content-Type": "application/json"}, body: body);
+
+  if (response.statusCode != 200) {
+    log("Error doing authorization2");
+    return false;
+  } else {
+    return true;
+  }
 }
