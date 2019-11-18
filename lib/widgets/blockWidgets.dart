@@ -1,6 +1,8 @@
 import 'package:day_challenge/assets/style.dart';
 import 'package:day_challenge/blocProvider/detailProvider.dart';
+import 'package:day_challenge/blocs/BlocMainScreen.dart';
 import 'package:day_challenge/blocs/blocDetailScreen.dart';
+import 'package:day_challenge/events/MainScreenEvents.dart';
 import 'package:day_challenge/helper/activity.dart';
 import 'package:day_challenge/helper/hexColor.dart';
 import 'package:day_challenge/screens/detailScreen2.dart';
@@ -34,6 +36,23 @@ class _BlockTileState extends State<BlockTile> {
   _BlockTileState();
   @override
   Widget build(BuildContext context) {
+    //Navigation Function
+    _navigateToDetailScreen() async {
+      final result = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return BlocProvider<BLocDetailScreen>(
+                builder: (BuildContext context) => BLocDetailScreen(),
+                child: DetailScreen(activity: widget.activity));
+          },
+        ),
+      );
+
+      if (true) {
+        BlocProvider.of<BlocHomeScreen>(context).add((FetchAll()));
+      }
+    }
+
     return GestureDetector(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -104,7 +123,7 @@ class _BlockTileState extends State<BlockTile> {
           ),
         ),
         onTap: () => {
-              Navigator.of(context).push(
+              /*Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return BlocProvider<BLocDetailScreen>(
@@ -112,7 +131,8 @@ class _BlockTileState extends State<BlockTile> {
                         child: DetailScreen(activity: widget.activity));
                   },
                 ),
-              ),
+              ),*/
+              _navigateToDetailScreen()
             });
   }
 }

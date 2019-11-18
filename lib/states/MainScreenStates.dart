@@ -60,6 +60,8 @@ class ShowLoginScreen extends MainScreenState {
 
 class LoginOrRegister extends MainScreenState {}
 
+class Loading extends MainScreenState {}
+
 //State for navigating to Detail Screen
 //Does this really need a state
 class NavigateToDetailScreen extends MainScreenState {

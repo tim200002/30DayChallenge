@@ -48,6 +48,7 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
     try {
       //Fetches all Activities from Repository and changes State to loaded
       if (event is FetchAll) {
+        yield (Loading());
         //Make API Call
         List<Activity> activities = await fetchDailyActivities(jwtToken);
 
@@ -141,9 +142,10 @@ class BlocHomeScreen extends Bloc<MainEvents, MainScreenState> {
               progressText: progressString,
               actualActivities: actualActivities);
           //yield ShowLoginScreen();
-        } else
+        } else {
           log("Login or Register");
-        yield (LoginOrRegister());
+          yield (LoginOrRegister());
+        }
       }
     } catch (_) {}
   }

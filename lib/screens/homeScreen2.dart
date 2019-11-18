@@ -4,6 +4,8 @@ import 'package:day_challenge/assets/art.dart';
 import 'package:day_challenge/assets/colors.dart';
 import 'package:day_challenge/blocs/blocChallengeScree.dart';
 import 'package:day_challenge/events/MainScreenEvents.dart';
+import 'package:day_challenge/helper/activity.dart';
+import 'package:day_challenge/screens/LoadingScreen.dart';
 import 'package:day_challenge/screens/challengeScreen.dart';
 import 'package:day_challenge/screens/login2.dart';
 import 'package:day_challenge/screens/loginOrRegister.dart';
@@ -34,6 +36,24 @@ class HomeScreen extends StatelessWidget {
     //Refresh Function
     Future<Null> _handleRefresh() async {
       BlocProvider.of<BlocHomeScreen>(context).add(FetchAll());
+    }
+
+    //Navigate Functions
+    _navigateToChallengeScreen(List<Activity> activities) async {
+      final result = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return BlocProvider<BlocChallengeScreen>(
+                builder: (BuildContext context) =>
+                    BlocChallengeScreen(activities: activities),
+                child: ChallengeScreen());
+          },
+        ),
+      );
+      if (result == true) {
+        log("update the Screen");
+        BlocProvider.of<BlocHomeScreen>(context).add(FetchAll());
+      }
     }
 
     //Allert Box
@@ -127,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           onTap: () {
                             log("Plus tapped");
-                            Navigator.of(context).push(
+                            /*Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return BlocProvider<BlocChallengeScreen>(
@@ -136,7 +156,8 @@ class HomeScreen extends StatelessWidget {
                                       child: ChallengeScreen());
                                 },
                               ),
-                            );
+                            );*/
+                            _navigateToChallengeScreen(state.activities);
                           },
                         ),
                         padding: const EdgeInsets.all(12.0),
@@ -180,6 +201,8 @@ class HomeScreen extends StatelessWidget {
             ));
           } else if (state is LoginOrRegister) {
             return LoginOrRegisterScreen();
+          } else if (state is Loading) {
+            return LoadingScreen();
           }
         },
       ),
