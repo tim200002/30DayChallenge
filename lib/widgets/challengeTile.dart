@@ -92,7 +92,7 @@ class _ChallengeTileState extends State<ChallengeTile> {
                   onPressed: () {
                     BlocProvider.of<BlocChallengeScreen>(context).add(
                         SubscribeToChallengeEvent(challenge: widget.challenge));
-                    Navigator.pop(context,true);
+                    Navigator.pop(context);
                     Navigator.pop(context, true);
                   },
                 )

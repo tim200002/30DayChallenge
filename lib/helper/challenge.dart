@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:day_challenge/assets/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -60,7 +61,7 @@ Future<List<Challenge>> fetchAllActualChallenges(
 
   Map data = {'challenges': id};
   var body = json.encode(data);
-  var response = await http.put('http://192.168.0.198:3000/api/challenge/activ',
+  var response = await http.put('$webAdress/api/challenge/activ',
       headers: {"Content-Type": "application/json"}, body: body);
   log(response.body);
   List<dynamic> list = json.decode(response.body);
