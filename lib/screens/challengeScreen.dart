@@ -33,23 +33,26 @@ class ChallengeScreen extends StatelessWidget {
           //Showing the Challenges
           if (state is ShowChallenges) {
             return SafeArea(
-                child: Column(
-              children: <Widget>[
-                Container(
-                  child: Text("Select a Challenge",
-                      style: TextStyle(color: Colors.white, fontSize: 30)),
-                  padding: EdgeInsets.all(15),
-                ),
-                //List of Tiles
-                Expanded(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Text("Select a Challenge",
+                        style: TextStyle(color: Colors.white, fontSize: 30)),
+                    padding: EdgeInsets.all(15),
+                  ),
+                  //List of Tiles
+                  Expanded(
                     child: ListView.builder(
-                  itemCount: state.challenges.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ChallengeTile(challenge: state.challenges[index]);
-                  },
-                ))
-              ],
-            ));
+                      itemCount: state.challenges.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ChallengeTile(
+                            challenge: state.challenges[index]);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            );
           }
         },
       ),

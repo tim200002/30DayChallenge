@@ -4,6 +4,8 @@ import 'package:day_challenge/assets/art.dart';
 import 'package:day_challenge/assets/colors.dart';
 import 'package:day_challenge/blocs/blocChallengeScree.dart';
 import 'package:day_challenge/events/MainScreenEvents.dart';
+import 'package:day_challenge/helper/activity.dart';
+import 'package:day_challenge/screens/LoadingScreen.dart';
 import 'package:day_challenge/screens/challengeScreen.dart';
 import 'package:day_challenge/screens/login2.dart';
 import 'package:day_challenge/screens/loginOrRegister.dart';
@@ -14,7 +16,6 @@ import 'package:day_challenge/widgets/statefullPorgressCircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -34,6 +35,24 @@ class HomeScreen extends StatelessWidget {
     //Refresh Function
     Future<Null> _handleRefresh() async {
       BlocProvider.of<BlocHomeScreen>(context).add(FetchAll());
+    }
+
+    //Navigate Functions
+    _navigateToChallengeScreen(List<Activity> activities) async {
+      final result = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return BlocProvider<BlocChallengeScreen>(
+                builder: (BuildContext context) =>
+                    BlocChallengeScreen(activities: activities),
+                child: ChallengeScreen());
+          },
+        ),
+      );
+      if (result == true) {
+        log("update the Screen");
+        BlocProvider.of<BlocHomeScreen>(context).add(FetchAll());
+      }
     }
 
     //Allert Box
@@ -65,11 +84,10 @@ class HomeScreen extends StatelessWidget {
       ],
     );
 
-    final bloc = BlocProvider.of<BlocHomeScreen>(context);
     //This is just for testing purposes, later must be st with Bloc:
-    const progress = 0.8;
+    //const progress = 0.8;
     //Get Color of progress Indicator
-    Color foregroundColor = progressColor(progress);
+    //Color foregroundColor = progressColor(progress);
     return Scaffold(
       body: BlocBuilder<BlocHomeScreen, MainScreenState>(
         builder: (context, state) {
@@ -127,7 +145,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           onTap: () {
                             log("Plus tapped");
-                            Navigator.of(context).push(
+                            /*Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return BlocProvider<BlocChallengeScreen>(
@@ -136,7 +154,8 @@ class HomeScreen extends StatelessWidget {
                                       child: ChallengeScreen());
                                 },
                               ),
-                            );
+                            );*/
+                            _navigateToChallengeScreen(state.activities);
                           },
                         ),
                         padding: const EdgeInsets.all(12.0),
@@ -149,7 +168,8 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     child: CircleProgressBar(
-                        foregroundColor: foregroundColor,
+                        foregroundColor:
+                            progressColor(getProgress(state.activities)),
                         value: getProgress(state.activities),
                         backgroundColor: Colors.black,
                         text:
@@ -180,6 +200,8 @@ class HomeScreen extends StatelessWidget {
             ));
           } else if (state is LoginOrRegister) {
             return LoginOrRegisterScreen();
+          } else if (state is Loading) {
+            return LoadingScreen();
           }
         },
       ),

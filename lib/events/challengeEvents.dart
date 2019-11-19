@@ -1,5 +1,4 @@
 import 'package:day_challenge/helper/challenge.dart';
-import 'package:day_challenge/states/challengeStates.dart';
 import 'package:flutter/material.dart';
 
 abstract class ChallengeEvents {}

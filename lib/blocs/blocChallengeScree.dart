@@ -4,19 +4,22 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:day_challenge/assets/api.dart';
 import 'package:day_challenge/events/challengeEvents.dart';
+import 'package:day_challenge/helper/activity.dart';
 import 'package:day_challenge/helper/challenge.dart';
 import 'package:day_challenge/states/challengeStates.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class BlocChallengeScreen extends Bloc<ChallengeEvents, ChallengeStates> {
   @override
   ChallengeStates get initialState => ScreenUnitialized();
-
+  List<Activity> activities;
+  BlocChallengeScreen({@required this.activities});
   @override
   Stream<ChallengeStates> mapEventToState(ChallengeEvents event) async* {
     if (event is ShowChallengesEvent) {
-      List<Challenge> challenges = await fetchAllChallenges();
+      List<Challenge> challenges = await fetchAllActualChallenges(activities);
 
       yield ShowChallenges(challenges: challenges);
     } else if (event is SubscribeToChallengeEvent) {

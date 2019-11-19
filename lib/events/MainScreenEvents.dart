@@ -32,3 +32,6 @@ class RegisterEvent extends MainEvents {
 
 //Logout
 class LogoutEvent extends MainEvents {}
+
+//Loading
+class LoadingEvent extends MainEvents {}

@@ -14,13 +14,13 @@ class DetailScreen extends StatelessWidget {
   final Activity activity;
   final double topBarHeight = 30;
   final double checkImageSize = 70;
-  final detailBloc = new BLocDetailScreen();
+  //final detailBloc = new BLocDetailScreen();
 
   //final detailBloc=new BlocDetailScreen()
 /*
   @override
   void dispose() {
-    detailBloc.dispose();
+    detailBloc.sink();
     super.dispose();
   }
   */
@@ -111,7 +111,7 @@ class DetailScreen extends StatelessWidget {
               ),
             );
           } else if (state is ActivityDone) {
-            return makeDoneScreen();
+            return MakeDoneScreen();
           }
         },
       ),
