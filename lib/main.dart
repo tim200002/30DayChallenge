@@ -1,4 +1,3 @@
-import 'package:day_challenge/blocProvider/homeProvider.dart';
 import 'package:day_challenge/screens/homeScreen2.dart';
 import 'package:day_challenge/blocs/BlocMainScreen.dart';
 
@@ -11,6 +10,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //The Bloc Provider which shows the Main Screen
     return BlocProvider<BlocHomeScreen>(
         builder: (BuildContext context) => BlocHomeScreen(),
         child: MaterialApp(
@@ -18,15 +18,6 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-
-            //Start Screen of the App
-            //home: homeScreen(),
-            // home: detailScreen(),
-            //home: testScreen(),
-
-            //The Bloc Provider which shows the Main Screen
-            //home: MainScreenProvider(),
             home: HomeScreen()));
-    //home: LoginScreen());
   }
 }

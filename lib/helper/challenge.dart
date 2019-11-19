@@ -47,6 +47,7 @@ Future<List<Challenge>> fetchAllChallenges() async {
     return challenges;
   } else {
     log("Exception");
+    return null;
   }
 }
 
@@ -74,5 +75,6 @@ Future<List<Challenge>> fetchAllActualChallenges(
     return challenges;
   } else {
     log("Exception");
+    return null;
   }
 }

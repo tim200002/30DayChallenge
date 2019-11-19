@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:day_challenge/assets/colors.dart';
 import 'package:day_challenge/blocs/BlocMainScreen.dart';
 import 'package:day_challenge/events/MainScreenEvents.dart';

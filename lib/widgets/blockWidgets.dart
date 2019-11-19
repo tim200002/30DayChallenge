@@ -1,5 +1,4 @@
 import 'package:day_challenge/assets/style.dart';
-import 'package:day_challenge/blocProvider/detailProvider.dart';
 import 'package:day_challenge/blocs/BlocMainScreen.dart';
 import 'package:day_challenge/blocs/blocDetailScreen.dart';
 import 'package:day_challenge/events/MainScreenEvents.dart';
@@ -17,9 +16,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlockTile extends StatefulWidget {
   //variables for this class
-  Activity activity;
-  Icon icon;
-  Color backgroundColor;
+  //!Changed everything to final
+  final Activity activity;
+  final Icon icon;
+  final Color backgroundColor;
   //Constructor
   BlockTile(
       {@required this.activity,
@@ -47,7 +47,7 @@ class _BlockTileState extends State<BlockTile> {
           },
         ),
       );
-
+      //Load Home Screen every time returning from Detail Screen -> maybe later just if changed
       if (true) {
         BlocProvider.of<BlocHomeScreen>(context).add((FetchAll()));
       }

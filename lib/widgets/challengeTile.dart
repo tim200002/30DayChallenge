@@ -1,7 +1,5 @@
 import 'package:day_challenge/assets/style.dart';
-import 'package:day_challenge/blocs/BlocMainScreen.dart';
 import 'package:day_challenge/blocs/blocChallengeScree.dart';
-import 'package:day_challenge/events/MainScreenEvents.dart';
 import 'package:day_challenge/events/challengeEvents.dart';
 import 'package:day_challenge/helper/challenge.dart';
 import 'package:day_challenge/helper/hexColor.dart';
@@ -10,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ChallengeTile extends StatefulWidget {
-  Challenge challenge;
+  final Challenge challenge;
 
   //Constructor
   ChallengeTile({@required this.challenge, key}) : super(key: key);

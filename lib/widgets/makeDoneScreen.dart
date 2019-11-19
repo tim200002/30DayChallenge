@@ -2,8 +2,8 @@ import 'package:day_challenge/assets/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class makeDoneScreen extends StatelessWidget {
-  const makeDoneScreen({Key key}) : super(key: key);
+class MakeDoneScreen extends StatelessWidget {
+  const MakeDoneScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

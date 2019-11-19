@@ -2,9 +2,7 @@
   All the States of the Main screen Block
 */
 
-import 'package:day_challenge/events/MainScreenEvents.dart';
 import 'package:day_challenge/helper/activity.dart';
-import 'package:flutter/semantics.dart';
 
 abstract class MainScreenState {
   //? What does the next Line do, maybe optional
@@ -40,6 +38,7 @@ class MainLoaded extends MainScreenState {
     return MainLoaded(activities: this.activities);
   }
 
+  //!Not sure if this is really in use, if yes fix it
   //Delete a single Item from the actualActivity List found by ID -> therefor I need a new Event like delete
   void delete(int challengeID) {
     for (Activity activity in actualActivities) {

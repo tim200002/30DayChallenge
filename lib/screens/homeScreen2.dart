@@ -16,7 +16,6 @@ import 'package:day_challenge/widgets/statefullPorgressCircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -85,11 +84,10 @@ class HomeScreen extends StatelessWidget {
       ],
     );
 
-    final bloc = BlocProvider.of<BlocHomeScreen>(context);
     //This is just for testing purposes, later must be st with Bloc:
-    const progress = 0.8;
+    //const progress = 0.8;
     //Get Color of progress Indicator
-    Color foregroundColor = progressColor(progress);
+    //Color foregroundColor = progressColor(progress);
     return Scaffold(
       body: BlocBuilder<BlocHomeScreen, MainScreenState>(
         builder: (context, state) {
@@ -170,7 +168,8 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     child: CircleProgressBar(
-                        foregroundColor: foregroundColor,
+                        foregroundColor:
+                            progressColor(getProgress(state.activities)),
                         value: getProgress(state.activities),
                         backgroundColor: Colors.black,
                         text:

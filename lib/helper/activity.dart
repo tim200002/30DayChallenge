@@ -1,7 +1,6 @@
 //This is the Class defining an Activity
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:day_challenge/assets/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

@@ -156,7 +156,7 @@ Future<String> verifyUser(String name, String password) async {
   Map data = {'name': name, 'password': password};
   var body = json.encode(data);
   //Make auth call
-  var response = await http.post('${webAdress}/api/auth',
+  var response = await http.post('$webAdress/api/auth',
       headers: {"Content-Type": "application/json"}, body: body);
 
   if (response.statusCode != 200) {
@@ -233,7 +233,7 @@ Future<bool> registerUser(name, password) async {
   Map data = {'name': name, 'password': password};
   var body = json.encode(data);
   //Make auth call
-  var response = await http.post('${webAdress}/api/register',
+  var response = await http.post('$webAdress/api/register',
       headers: {"Content-Type": "application/json"}, body: body);
 
   if (response.statusCode != 200) {
