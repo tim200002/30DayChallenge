@@ -9,6 +9,7 @@ import 'package:day_challenge/screens/LoadingScreen.dart';
 import 'package:day_challenge/screens/challengeScreen.dart';
 import 'package:day_challenge/screens/login2.dart';
 import 'package:day_challenge/screens/loginOrRegister.dart';
+import 'package:day_challenge/screens/loginStateful.dart';
 import 'package:day_challenge/states/MainScreenStates.dart';
 import 'package:day_challenge/blocs/BlocMainScreen.dart';
 import 'package:day_challenge/widgets/blockWidgets.dart';
@@ -111,7 +112,7 @@ class HomeScreen extends StatelessWidget {
           //When State is Show Login screen -> show Login Screen
           else if (state is ShowLoginScreen) {
             log("state");
-            return LoginScreen();
+            return LoginScreenStful();
           }
 
           //Display all Activities on the Main Screen -> normaly all the Time
